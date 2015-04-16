@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('comapny_name');
-			$table->decimal('product_quantity', 5, 2);
+			$table->decimal('product_quantity', 10, 2);
 			$table->timestamp('date_of_delivery');
 			$table->string('destination');
 

@@ -17,9 +17,9 @@ class CreateCrossingsTable extends Migration {
 			$table->increments('id');
 			$table->string('operator');
 			$table->string('highway_stretch');
-			$table->decimal('cost', 5, 2);
-			$table->decimal('cost_with_discount', 5, 2);
-			$table->decimal('billed_cost', 5, 2);
+			$table->decimal('cost', 10, 2);
+			$table->decimal('cost_with_discount', 10, 2);
+			$table->decimal('billed_cost', 10, 2);
 			$table->timestamp('crossing_date');
 
 			$table->integer('tag_id')->unsigned();

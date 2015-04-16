@@ -18,7 +18,7 @@ class CreateTrucksTable extends Migration {
 			$table->string('model');
 			$table->string('year');
 			$table->string('plates')->unique();
-			$table->decimal('capacity', 5, 2);
+			$table->decimal('capacity', 10, 2);
 			$table->timestamp('date_last_service');
 			$table->integer('is_available')->unsigned();
 			$table->integer('is_in_service')->unsigned();

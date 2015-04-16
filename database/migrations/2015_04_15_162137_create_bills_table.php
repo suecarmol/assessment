@@ -15,8 +15,8 @@ class CreateBillsTable extends Migration {
 		Schema::create('bills', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('quantity_delivered', 5, 2);
-			$table->decimal('total_price', 5, 2);
+			$table->decimal('quantity_delivered', 10, 2);
+			$table->decimal('total_price', 10, 2);
 			$table->timestamp('valid_thru');
 			$table->integer('is_paid_for')->unsigned();
 
