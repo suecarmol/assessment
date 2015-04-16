@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo"><b>Admin</b>LTE</a>
+    <a href="index2.html" class="logo">F<b>e</b>L<b>i</b>N<b>a</b></a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->

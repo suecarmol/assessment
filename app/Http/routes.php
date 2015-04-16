@@ -13,9 +13,18 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+//Route::get('products', 'ProductsController@index');
+//Route::get('products/create', 'ProductsController@create');
+
+//New routes
+
+//NOTE TO SELF: to add new routes not in resource (CRUD), you should add them BEFORE 
+//your Route::resource call
+
+Route::resource('products', 'ProductsController');
+Route::resource('trucks', 'TrucksController');
