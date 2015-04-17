@@ -1,11 +1,21 @@
 <div class="col-md-12"> 
 	<div class="box box-primary">
 		<div class="box-header">
-			<h3 class="box-title">Crear Producto</h3>
+			@if(isset($product))
+				<h3 class="box-title">Actualizar {{$product->product_name}}</h3>
+			@else
+				<h3 class="box-title">Crear Producto</h3>
+			@endif
 		</div>
 		
 		<div class="box-body">
-			{!! Form::open(['route' => 'products.store']) !!}
+
+			{{--check if user has selected create or update --}}
+			@if(isset($product))
+				{!! Form::model($product, ['route' => ['products.update', $product->id], 'method' => 'patch']) !!}
+			@else
+				{!! Form::open(['route' => 'products.store']) !!}
+			@endif	
 				<div class="form-group">
 					{!! Form::label('product_name', 'Nombre del Producto') !!}
 					{!! Form::text('product_name', null, [

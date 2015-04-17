@@ -41,4 +41,32 @@ class ProductsController extends Controller {
 
 	}
 
+	public function edit($id){
+
+		$product = Product::findOrFail($id);
+
+		return view('products.edit', compact('product'));
+	}
+
+	public function update($id, ProductsForm $productForm){
+
+		$input = Product::findOrFail($id);
+
+		$input->product_name = \Request::input('product_name');
+		$input->price = \Request::input('price');
+		$input->save();
+
+		return redirect('products')->with('message', 'Se han editado correctamente los datos.');
+
+	}
+
+	public function destroy($id){
+
+		$input = Product::find($id);
+
+		$input->delete();
+
+		return redirect('products')->with('message', 'Se han eliminado correctamente los datos.');
+	}
+
 }

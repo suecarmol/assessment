@@ -32,8 +32,14 @@
 								<tr>
 									<td> {{ $product->product_name }} </td>
 									<td> {{ $product->price }} </td>
-									<td> <button class="btn btn-block btn-info">Actualizar</button>  </td>
-									<td> <button class="btn btn-block btn-danger">Borrar</button> </td>
+									<td> 
+                    {!! Html::link(route('products.edit', $product->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
+                  </td>
+									<td> 
+                    {!! Form::open(array('route' => array('products.destroy', $product->id), 'method' => 'DELETE')) !!}
+                      <button type="submit" class="btn btn-block btn-danger">Borrar</button>
+                    {!! Form::close() !!}
+                  </td>
 								</tr>
 								@endforeach	
 							</tbody>
