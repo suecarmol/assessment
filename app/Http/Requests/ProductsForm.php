@@ -31,9 +31,9 @@ class ProductsForm extends Request {
 	public function messages(){
 
 		return [
-			'product_name.required' => 'El campo Nombre del Producto es requerido',
-			'price.required' => 'El campo Precio es requerido',
-			'price.numeric' => 'El campo Precio debe ser un n&uacute;mero'
+			'product_name.required' => 'El campo Nombre del Producto es requerido.',
+			'price.required' => 'El campo Precio es requerido.',
+			'price.numeric' => 'El campo Precio debe ser un n&uacute;mero.'
 
 		];
 	}

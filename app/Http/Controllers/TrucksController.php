@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Truck;
 use Illuminate\Http\Request;
+use App\Http\Requests\TrucksForm;
 
 class TrucksController extends Controller {
 
@@ -37,9 +38,25 @@ class TrucksController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(TrucksForm $truckForm)
 	{
 		//
+		$input = new Truck;
+
+		$input->model = \Request::input('model');
+		$input->brand = \Request::input('brand');
+		$input->year = \Request::input('year');
+		$input->plates = \Request::input('plates');
+		$input->capacity = \Request::input('capacity');
+		$input->date_last_service = date('Y-m-d', strtotime(\Request::input('date_last_service')));
+
+		//when creating a truck, both fields are 0 by default
+		$input->is_available = 0;
+		$input->is_in_service = 0;
+
+		$input->save();
+
+		return redirect('trucks')->with('message', 'Se han guardado correctamente los datos.');
 	}
 
 	/**
@@ -51,6 +68,9 @@ class TrucksController extends Controller {
 	public function show($id)
 	{
 		//
+		$truck = Truck::findOrFail($id);
+
+		return view('trucks.show', compact('truck'));
 	}
 
 	/**
@@ -62,6 +82,9 @@ class TrucksController extends Controller {
 	public function edit($id)
 	{
 		//
+		$truck = Truck::findOrFail($id);
+
+		return view('trucks.edit', compact('truck'));
 	}
 
 	/**
@@ -73,6 +96,23 @@ class TrucksController extends Controller {
 	public function update($id)
 	{
 		//
+
+		$input = Truck::findOrFail($id);
+
+		$input->model = \Request::input('model');
+		$input->brand = \Request::input('brand');
+		$input->year = \Request::input('year');
+		$input->plates = \Request::input('plates');
+		$input->capacity = \Request::input('capacity');
+		$input->date_last_service = date('Y-m-d', strtotime(\Request::input('date_last_service')));
+
+		//when creating a truck, both fields are 0 by default
+		$input->is_available = 0;
+		$input->is_in_service = 0;
+
+		$input->save();
+
+		return redirect('trucks')->with('message', 'Se han actualizado correctamente los datos.');
 	}
 
 	/**
@@ -84,6 +124,11 @@ class TrucksController extends Controller {
 	public function destroy($id)
 	{
 		//
+		$input = Truck::findOrFail($id);
+
+		$input->delete();
+
+		return redirect('trucks')->with('message', 'Se han eliminado correctamente los datos.');
 	}
 
 }

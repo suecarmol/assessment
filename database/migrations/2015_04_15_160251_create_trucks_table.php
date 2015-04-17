@@ -24,6 +24,7 @@ class CreateTrucksTable extends Migration {
 			$table->integer('is_in_service')->unsigned();
 			$table->timestamps();
 		});
+		
 	}
 
 	/**

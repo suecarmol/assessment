@@ -32,7 +32,11 @@
 					]) !!}
 				</div>
 				<div class="box-footer">
-					{!! Form::submit('Agregar', ['class' => 'btn btn-primary']) !!}
+					@if(isset($product))
+						{!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
+					@else
+						{!! Form::submit('Crear', ['class' => 'btn btn-primary']) !!}
+					@endif	
 				</div>
 			{!! Form::close() !!}
 			

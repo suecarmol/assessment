@@ -1,5 +1,5 @@
 @extends('app')
 	@include('includes.admin.sidebar')
 	@section('content')
-		@include('products.partials.form')
+		@include('trucks.partials.form')
 	@stop
