@@ -4,6 +4,13 @@
 	@include('includes.admin.sidebar')
 	@section('content')
 
+    @if (Session::has('message'))
+      <div class="alert alert-success alert-dismissable">{{ Session::get('message') }}</div>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+      <h4> <i class="icon fa fa-check"></i> &Eacute;xito </h4>
+      Se ha insertado la informaci&oacute;n exitosamente.
+    @endif  
+    
 		<div class="row">
       <div class="col-xs-12">
         <div class="box">
@@ -16,6 +23,7 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Precio</th>
+                  <th colspan="2">Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -32,6 +40,7 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Precio</th>
+                  <th colspan="2">Acciones</th>  
                 </tr>
               </tfoot>
             </table>

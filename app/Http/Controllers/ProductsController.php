@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Post;
+use App\Http\Requests\ProductsForm;
 
 
 class ProductsController extends Controller {
@@ -27,6 +29,16 @@ class ProductsController extends Controller {
 
 	}
 
-	//public function 
+	public function store(ProductsForm $productForm){
+
+		$input = new Product;
+
+		$input->product_name = \Request::input('product_name');
+		$input->price = \Request::input('price');
+		$input->save();
+
+		return redirect('products')->with('message', 'Se han guardado correctamente los datos');
+
+	}
 
 }

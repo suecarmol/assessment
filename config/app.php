@@ -180,7 +180,7 @@ return [
 		'Lang'      => 'Illuminate\Support\Facades\Lang',
 		'Log'       => 'Illuminate\Support\Facades\Log',
 		'Mail'      => 'Illuminate\Support\Facades\Mail',
-		'Password'  => 'Illuminate\Support\Facades\Password',
+		'Password' 	=> 'Illuminate\Support\Facades\Password',
 		'Queue'     => 'Illuminate\Support\Facades\Queue',
 		'Redirect'  => 'Illuminate\Support\Facades\Redirect',
 		'Redis'     => 'Illuminate\Support\Facades\Redis',
@@ -194,7 +194,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 		//new additions
-		'Carbon' => 'Carbon\Carbon',
+		'Carbon' 		=> 'Carbon\Carbon',
 		'Html'      => 'Illuminate\Html\HtmlFacade',
 		'Form'      => 'Illuminate\Html\FormFacade',
 

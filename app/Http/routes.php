@@ -26,5 +26,6 @@ Route::controllers([
 //NOTE TO SELF: to add new routes not in resource (CRUD), you should add them BEFORE 
 //your Route::resource call
 
+Route::post('products', 'ProductsController@store');
 Route::resource('products', 'ProductsController');
 Route::resource('trucks', 'TrucksController');

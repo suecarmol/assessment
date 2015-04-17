@@ -3,21 +3,28 @@
 		<div class="box-header">
 			<h3 class="box-title">Crear Producto</h3>
 		</div>
-		<form role="form">
-			<div class="box-body">
+		
+		<div class="box-body">
+			{!! Form::open(['route' => 'products.store']) !!}
 				<div class="form-group">
-					<label>Nombre del Producto</label>
-					<input type="text" class="form-control" placeholder="Nombre">
+					{!! Form::label('product_name', 'Nombre del Producto') !!}
+					{!! Form::text('product_name', null, [
+						'class' => 'form-control',
+						'placeholder' => 'Nombre'
+					]) !!}
 				</div>
-				<label>Precio</label>
-				<div class="input-group">
+					{!! Form::label('price', 'Precio') !!}
+				<div class="input-group">	
 					<span class="input-group-addon"> <i class="fa fa-dollar"></i> </span>
-					<input type="text" class="form-control" placeholder="Precio">
+					{!! Form::text('price', null, [
+						'class' => 'form-control',
+						'placeholder' => 'Precio'
+					]) !!}
 				</div>
-			</div>
-			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">Agregar</button>
-			</div>
-		</form>
+				<div class="box-footer">
+					{!! Form::submit('Agregar', ['class' => 'btn btn-primary']) !!}
+				</div>
+			{!! Form::close() !!}
+			
 	</div>
 </div>
