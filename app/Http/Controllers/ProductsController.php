@@ -37,7 +37,7 @@ class ProductsController extends Controller {
 		$input->price = \Request::input('price');
 		$input->save();
 
-		return redirect('products')->with('message', 'Se han guardado correctamente los datos');
+		return redirect('products')->with('message', 'Se han guardado correctamente los datos.');
 
 	}
 

@@ -5,12 +5,13 @@
 	@section('content')
 
     @if (Session::has('message'))
-      <div class="alert alert-success alert-dismissable">{{ Session::get('message') }}</div>
+      <div class="alert alert-success alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
       <h4> <i class="icon fa fa-check"></i> &Eacute;xito </h4>
-      Se ha insertado la informaci&oacute;n exitosamente.
+      {{ Session::get('message') }}
+      </div>
     @endif  
-    
+
 		<div class="row">
       <div class="col-xs-12">
         <div class="box">
