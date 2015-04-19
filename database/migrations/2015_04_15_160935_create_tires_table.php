@@ -19,7 +19,7 @@ class CreateTiresTable extends Migration {
 			$table->string('serial_number');
 			$table->timestamp('date_added_to_truck');
 			$table->timestamp('date_last_service');
-			$table->timestamp('date_removed');
+			$table->timestamp('date_removed')->nullable();
 			$table->integer('truck_id')->unsigned();
 			$table->timestamps();
 		});

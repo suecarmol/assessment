@@ -1,24 +1,33 @@
 @extends('app')
 	@include('includes.admin.sidebar')
 	@section('content')
-		<h1>Cami&oacute;n {{ $truck->model}}</h1>
 
-		<h2>Modelo</h2>
-		<h4> {{$truck->model}} </h4>
+	<div class="col-md-12">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h3>Cami&oacute;n {{ $truck->model}}</h3>
+			</div>
+			<div class="box-body">
+				<h4>Modelo</h4>
+				<h5> {{$truck->model}} </h5>
 
-		<h2>Marca</h2>
-		<h4> {{$truck->brand}} </h4>
+				<h4>Marca</h4>
+				<h5> {{$truck->brand}} </h5>
 
-		<h2>Placas</h2>
-		<h4> {{$truck->plates}} </h4>
+				<h4>Placas</h4>
+				<h5> {{$truck->plates}} </h5>
 
-		<h2>A&ntilde;o</h2>
-		<h4> {{$truck->year}} </h4>
+				<h4>A&ntilde;o</h4>
+				<h5> {{$truck->year}} </h5>
 
-		<h2>Capacidad</h2>
-		<h4> {{$truck->capacity}} </h4>
+				<h4>Capacidad</h4>
+				<h5> {{$truck->capacity}} </h5>
 
-		<h2>Fecha del &uacute;ltimo servicio</h2>
-		<h4> {{$truck->date_last_service}} </h4>
+				<h4>Fecha del &uacute;ltimo servicio</h4>
+				<h5> {{$truck->date_last_service}} </h5>
+				{!! Html::link(route('trucks.index'), 'Regresar a Camiones', array('class' => 'btn btn-block btn-info')) !!}
+			</div>
+		</div>
+	</div>
 
 	@stop

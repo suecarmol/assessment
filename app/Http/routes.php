@@ -33,3 +33,17 @@ Route::resource('products', 'ProductsController');
 //Trucks Routes
 Route::post('trucks', 'TrucksController@store');
 Route::resource('trucks', 'TrucksController');
+
+//Users Routes
+Route::post('users', 'UsersController@store');
+Route::resource('users', 'UsersController');
+
+//Orders Routes
+Route::post('orders', 'OrdersController@store');
+Route::resource('orders', 'OrdersController');
+
+//Tires Routes
+Route::post('tires', 'TiresController@store');
+Route::resource('tires', 'TiresController');
+
+

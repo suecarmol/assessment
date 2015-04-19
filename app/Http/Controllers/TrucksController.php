@@ -56,7 +56,7 @@ class TrucksController extends Controller {
 
 		$input->save();
 
-		return redirect('trucks')->with('message', 'Se han guardado correctamente los datos.');
+		return redirect('trucks')->with('message', 'Se han agregado correctamente los datos.');
 	}
 
 	/**

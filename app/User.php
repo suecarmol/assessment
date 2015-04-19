@@ -22,13 +22,35 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'last_name', 'email', 'password', 'company', 'user_type'];
+	protected $fillable = [
+		'name', 
+		'last_name', 
+		'email', 
+		'password', 
+		'company', 
+		'user_type'
+	];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['password', 'remember_token'];
+	protected $hidden = [
+		'password', 
+		'remember_token'
+	];
+
+	protected $guarded = [ 
+		'id'
+	];
+
+
+	// A user can place many orders
+	public function orders()
+	{
+
+		return $this->hasMany('App\Order');
+	}
 
 }

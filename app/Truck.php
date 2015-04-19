@@ -19,4 +19,18 @@ class Truck extends Model {
 	protected $guarded = [
 		'id'
 	];
+
+	// A truck can deliver many orders
+	public function orders()
+	{
+
+		return $this->hasMany('App\Order');
+	}
+
+	public function tires()
+	{
+
+		return $this->hasMany('App\Tire');
+	}
+
 }

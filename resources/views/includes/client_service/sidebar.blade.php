@@ -26,24 +26,17 @@
         <ul class="sidebar-menu">
             <li class="header">NAVEGACI&Oacute;N</li>
 
-            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-flask"></i> <span>Productos</span>  <i class="fa fa-angle-left pull-right"></i> </a> 
+            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-list-ol"></i> <span>&Oacute;rdenes</span>  <i class="fa fa-angle-left pull-right"></i> </a> 
                 <ul class="treeview-menu">
-                    <li><a href="{{ action('ProductsController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Productos</a></li>
-                    <li><a href="{{ action('ProductsController@create') }}"><i class="fa fa-circle-o"></i> Crear Producto</a></li>
+                    <li><a href="{{ action('OrdersController@index') }}"><i class="fa fa-circle-o"></i> Mostrar &Oacute;rdenes</a></li>
+                    <li><a href="{{ action('OrdersController@create') }}"><i class="fa fa-circle-o"></i> Crear Orden</a></li>
                 </ul>
             </li>
 
-            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-truck"></i> <span>Camiones</span> <i class="fa fa-angle-left pull-right"></i> </a> 
+            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-users"></i> <span>Clientes</span> <i class="fa fa-angle-left pull-right"></i> </a> 
               <ul class="treeview-menu">
-                    <li><a href="{{ action('TrucksController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Camiones</a></li>
-                    <li><a href="{{ action('TrucksController@create') }}"><i class="fa fa-circle-o"></i> Crear Cami&oacute;n</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-users"></i> <span>Usuarios</span>  <i class="fa fa-angle-left pull-right"></i>  </a> 
-              <ul class="treeview-menu">
-                    <li><a href="{{ action('UsersController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Usuarios</a></li>
-                    <li><a href="{{ action('UsersController@create') }}"><i class="fa fa-circle-o"></i> Crear Usuario</a></li>
+                    <li><a href="{{ action('UsersController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Clientes</a></li>
+                    <li><a href="{{ action('UsersController@create') }}"><i class="fa fa-circle-o"></i> Crear Cliente</a></li>
               </ul>
             </li>
         </ul>    

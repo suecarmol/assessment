@@ -37,7 +37,6 @@
     <body class="skin-blue">
         <div class="wrapper">
             @include('includes.header')
-            {{--@include('includes.sidebar')--}}
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->

@@ -20,6 +20,30 @@ class AuthController extends Controller {
 
 	use AuthenticatesAndRegistersUsers;
 
+
+	/*if(Auth::user()->user_type == 'admin'){
+		protected $redirectTo = '/users';
+	}
+	elseif(Auth::user()->user_type == 'maintenance'){
+		protected $redirectTo = '/trucks';
+	}
+	elseif (Auth::user()->user_type == 'billing') {
+		protected $redirectTo = '/bills';
+	}
+	elseif (Auth::user()->user_type == 'client_service') {
+		protected redirectTo = "/orders"
+	}
+	elseif(Auth::user()->user_type == 'logistics'){
+		protected $redirectTo = '/routes'
+	}
+	elseif(Auth::user()->user_type == 'client'){
+		protected $redirectTo = '/orders';
+	}
+	else{
+		protected $redirectTo = '/auth/login';
+	}*/
+
+
 	/**
 	 * Create a new authentication controller instance.
 	 *
