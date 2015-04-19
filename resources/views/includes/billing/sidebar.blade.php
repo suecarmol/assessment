@@ -26,24 +26,17 @@
         <ul class="sidebar-menu">
             <li class="header">NAVEGACI&Oacute;N</li>
 
-            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-truck"></i> <span>Camiones</span> <i class="fa fa-angle-left pull-right"></i> </a> 
-              <ul class="treeview-menu">
-                    <li><a href="{{ action('TrucksController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Camiones</a></li>
-                    <li><a href="{{ action('TrucksController@create') }}"><i class="fa fa-circle-o"></i> Crear Camiones</a></li>
-              </ul>
-            </li>
-
-            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-tachometer"></i> <span>Llantas</span>  <i class="fa fa-angle-left pull-right"></i> </a> 
+            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-money"></i> <span>Facturas</span>  <i class="fa fa-angle-left pull-right"></i> </a> 
                 <ul class="treeview-menu">
-                    <li><a href="{{ action('TiresController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Llantas</a></li>
-                    <li><a href="{{ action('TiresController@create') }}"><i class="fa fa-circle-o"></i> Crear Llanta</a></li>
+                    <li><a href="{{ action('BillsController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Facturas</a></li>
+                    <li><a href="{{ action('BillsController@create') }}"><i class="fa fa-circle-o"></i> Crear Factura</a></li>
                 </ul>
             </li>
 
-           <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-wrench"></i> <span>Servicios</span>  <i class="fa fa-angle-left pull-right"></i>  </a> 
+            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-flask"></i> <span>Productos</span> <i class="fa fa-angle-left pull-right"></i> </a> 
               <ul class="treeview-menu">
-                    <li><a href="{{ action('ServicesController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Servicios</a></li>
-                    <li><a href="{{ action('ServicesController@create') }}"><i class="fa fa-circle-o"></i> Crear Servicio</a></li>
+                    <li><a href="{{ action('ProductsController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Productos</a></li>
+                    <li><a href="{{ action('ProductsController@create') }}"><i class="fa fa-circle-o"></i> Crear Producto</a></li>
               </ul>
             </li>
         </ul>    

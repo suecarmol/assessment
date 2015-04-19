@@ -14,29 +14,29 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">&Oacute;rdenes</h3>
+            <h3 class="box-title">Choferes</h3>
           </div><!-- /.box-header -->
           <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>Compa&ntilde;&iacute;a</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
+                  <th>Nombre</th>
+                  <th>Apellidos</th>
+                  <th>N&uacute;mero de multas</th>
                   <th colspan="2">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-								@foreach($orders as $order)
+								@foreach($drivers as $driver)
 								<tr>
-									<td><a href="{{ action('OrdersController@show', $order->id) }}"> {{ $order->comapny_name }} </a></td>
-									<td> {{ $order->product_quantity }} </td>
-									<td> {{ $order->total_price }} </td>
+									<td><a href="{{ action('DriversController@show', $driver->id) }}"> {{ $driver->name }} </a></td>
+									<td> {{ $driver->last_name }} </td>
+									<td> {{ $driver->number_of_tickets }} </td>
 									<td> 
-                    {!! Html::link(route('orders.edit', $order->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
+                    {!! Html::link(route('drivers.edit', $driver->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
                   </td>
 									<td> 
-                    {!! Form::open(array('route' => array('orders.destroy', $order->id), 'method' => 'DELETE')) !!}
+                    {!! Form::open(array('route' => array('drivers.destroy', $driver->id), 'method' => 'DELETE')) !!}
                       <button type="submit" class="btn btn-block btn-danger">Borrar</button>
                     {!! Form::close() !!}
                   </td>
@@ -45,9 +45,9 @@
 							</tbody>
 							<tfoot>
                 <tr>
-                  <th>Compa&ntilde;&iacute;a</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
+                  <th>Nombre</th>
+                  <th>Apellidos</th>
+                  <th>N&uacute;mero de multas</th>
                   <th colspan="2">Acciones</th> 
                 </tr>
               </tfoot>

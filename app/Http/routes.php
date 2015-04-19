@@ -46,4 +46,20 @@ Route::resource('orders', 'OrdersController');
 Route::post('tires', 'TiresController@store');
 Route::resource('tires', 'TiresController');
 
+//Services Routes
+Route::post('services', 'ServicesController@store');
+Route::resource('services', 'ServicesController');
+
+//Drivers Routes
+Route::post('drivers', 'DriversController@store');
+Route::resource('drivers', 'DriversController');
+
+//Bills Routes 
+Route::post('bills', 'BillsController@store');
+Route::resource('bills', 'BillsController');
+
+
+
+
+
 

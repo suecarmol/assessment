@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use App\Service;
+use App\Http\Requests\ServicesForm;
 
 class ServicesController extends Controller {
 
@@ -15,8 +17,9 @@ class ServicesController extends Controller {
 	public function index()
 	{
 		//
+		$services = Service::all();
 
-		return "INdex services";
+		return view('services.index', compact('services'));
 	}
 
 	/**
@@ -27,8 +30,16 @@ class ServicesController extends Controller {
 	public function create()
 	{
 		//
+		$trucks_query = \DB::table('trucks')->get();
+		$trucks = array();
 
-		return "create services";
+		foreach ($trucks_query as $truck) {
+			$trucks [] = array(
+				$truck->id => $truck->brand . ' ' .  $truck->model . ' ' . $truck->plates
+			);
+		}
+
+		return view('services.create', compact('trucks'));
 	}
 
 	/**
@@ -36,9 +47,31 @@ class ServicesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(ServicesForm $servicesForm)
 	{
 		//
+		$service = new Service;
+
+		$service->start_of_service = date('Y-m-d', strtotime(\Request::input('start_of_service')));
+		$service->end_of_service = date('Y-m-d', strtotime(\Request::input('end_of_service')));
+		$service->type_of_service = \Request::input('type_of_service');
+		$service->number_of_delays = \Request::input('number_of_delays');
+		//foreign keys
+
+		$truck_id = \Request::input('truck_id');
+		$service->truck_id = $truck_id;
+		$service->user_id = \Auth::user()->id;
+		$service->service_number = uniqid(\Request::input('type_of_service'));
+
+		//change truck's availability flag to not available
+		$truck = \DB::table('trucks')
+		->where('id', $truck_id)
+		->update(['is_in_service' => 1]);
+
+		$service->save();
+
+		return redirect('services')->with('message', 'Los datos se han agregado correctamente.');
+
 	}
 
 	/**
@@ -50,6 +83,9 @@ class ServicesController extends Controller {
 	public function show($id)
 	{
 		//
+		$service = Service::findOrFail($id);
+
+		return view('services.show', compact('service'));
 	}
 
 	/**
@@ -61,6 +97,18 @@ class ServicesController extends Controller {
 	public function edit($id)
 	{
 		//
+		$service = Service::findOrFail($id);
+
+		$trucks_query = \DB::table('trucks')->get();
+		$trucks = array();
+
+		foreach ($trucks_query as $truck) {
+			$trucks [] = array(
+				$truck->id => $truck->brand . ' ' .  $truck->model . ' ' . $truck->plates
+			);
+		}
+
+		return view('services.edit', compact('service'), compact('trucks'));
 	}
 
 	/**
@@ -69,9 +117,30 @@ class ServicesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, ServicesForm $servicesFor)
 	{
 		//
+		$service = Service::findOrFail($id);
+
+		$service->start_of_service = date('Y-m-d', strtotime(\Request::input('start_of_service')));
+		$service->end_of_service = date('Y-m-d', strtotime(\Request::input('end_of_service')));
+		$service->type_of_service = \Request::input('type_of_service');
+		$service->number_of_delays = \Request::input('number_of_delays');
+		//foreign keys
+
+		$truck_id = \Request::input('truck_id');
+		$service->truck_id = $truck_id;
+		$service->user_id = \Auth::user()->id;
+		$service->service_number = uniqid(\Request::input('type_of_service'));
+
+		//change truck's availability flag to not available
+		$truck = \DB::table('trucks')
+		->where('id', $truck_id)
+		->update(['is_in_service' => 1]);
+
+		$service->save();
+
+		return redirect('services')->with('message', 'Los datos se han actualizado correctamente.');
 	}
 
 	/**
@@ -83,6 +152,19 @@ class ServicesController extends Controller {
 	public function destroy($id)
 	{
 		//
+		$service = Service::findOrFail($id);
+
+		$truck_id = $service->truck_id;
+
+		//change truck's availability flag to available
+		$truck = \DB::table('trucks')
+		->where('id', $truck_id)
+		->update(['is_in_service' => 0]);
+
+		$service->delete();
+
+		return redirect('services')->with('message', 'Se han eliminado correctamente los datos.');
+
 	}
 
 }

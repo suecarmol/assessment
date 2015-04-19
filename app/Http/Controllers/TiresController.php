@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Tire;
+use App\Http\Requests\TiresForm;
 
 class TiresController extends Controller {
 
@@ -47,7 +48,7 @@ class TiresController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(TiresForm $tiresForm)
 	{
 		//
 
@@ -62,7 +63,7 @@ class TiresController extends Controller {
 
 		$tire->save();
 
-		return redirect('tires')->with('messages', 'Los datos se han agregado correctamente.');
+		return redirect('tires')->with('message', 'Los datos se han agregado correctamente.');
 
 	}
 
@@ -86,7 +87,7 @@ class TiresController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($id, TiresForm $tiresForm)
 	{
 		//
 
@@ -117,14 +118,14 @@ class TiresController extends Controller {
 		$tire = Tire::findOrFail($id);
 		$tire->brand = \Request::input('brand');
 		$tire->serial_number = \Request::input('serial_number');
-		$tire->date_added_to_truck = \Request::input('date_added_to_truck');
-		$tire->date_last_service = \Request::input('date_last_service');
-		$tire->date_removed = \Request::input('date_removed');
+		$tire->date_added_to_truck = date('Y-m-d', strtotime(\Request::input('date_added_to_truck')));
+		$tire->date_last_service = date('Y-m-d', strtotime(\Request::input('date_last_service')));
+		$tire->date_removed = date('Y-m-d', strtotime(\Request::input('date_removed')));
 		$tire->truck_id = \Request::input('truck_id');
 
 		$tire->save();
 
-		return redirect('tires')->with('messages', 'Los datos se han actualizado correctamente.');
+		return redirect('tires')->with('message', 'Los datos se han actualizado correctamente.');
 
 	}
 

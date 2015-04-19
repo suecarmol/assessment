@@ -1,8 +1,9 @@
 @extends('app')
-	@include('includes.admin.sidebar')
+	@include('includes.maintenance.sidebar')
 	@section('content')
-		@include('products.partials.form')
-		@if($errors->has())
+		@include('services.partials.form')
+
+	@if($errors->has())
 	    <div class="callout callout-danger">
 	    	<h4>Error</h4>
 
@@ -10,5 +11,5 @@
             {!! $message !!}
         	@endforeach
 	    </div>
-	  @endif
+	  @endif	
 	@stop

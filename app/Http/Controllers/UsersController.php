@@ -38,7 +38,7 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(UsersForm $usersForm)
 	{
 		//
 
@@ -62,7 +62,7 @@ class UsersController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($id, UsersForm $usersForm)
 	{
 		//
 

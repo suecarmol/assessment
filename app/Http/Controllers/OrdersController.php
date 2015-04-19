@@ -4,7 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Order;
-use App\Truck;
+use App\Http\Requests\OrdersForm;
 
 class OrdersController extends Controller {
 
@@ -64,28 +64,40 @@ class OrdersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(OrdersForm $ordersForm)
 	{
 		//
 
 		$order = new Order;
 
 		$order->comapny_name = \Request::input('comapny_name');
-		$order->product_quantity = \Request::input('product_quantity');
+		$product_quantity = \Request::input('product_quantity');
+		$order->product_quantity = $product_quantity;
 		$order->date_of_delivery = date('Y-m-d', strtotime(\Request::input('date_of_delivery')));
 		$order->destination = \Request::input('destination');
 		$order->order_number = uniqid(\Request::input('comapny_name'));
 
 		//foreign keys
 
-		$order->product_id = \Request::input('product_id');
-		$order->truck_id = \Request::input('truck_id');
+		$truck_id = \Request::input('truck_id');
+		$product_id = \Request::input('product_id');
+
+		$order->product_id = $product_id;
+		$order->truck_id = $truck_id;
 		$order->user_id = \Auth::user()->id;
 
-		$truck_id = $order->truck_id;
 		//change truck's availability flag to not available
-		$truck = \DB::table('trucks')->where('id', '=', $truck_id);
-		$truck->is_available = 1;
+		$truck = \DB::table('trucks')
+		->where('id', $truck_id)
+		->update(['is_available' => 1]);
+
+		//search for the price to calculate total price
+		$product_price = \DB::table('products')
+		->select('price')
+		->where('id', $product_id)
+		->get();
+
+		$order->total_price = $product_price * $product_quantity;
 
 		$order->save();
 
@@ -154,23 +166,38 @@ class OrdersController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, OrdersForm $ordersForm)
 	{
 		//
 
 		$order = Order::findOrFail($id);
 
 		$order->comapny_name = \Request::input('comapny_name');
-		$order->product_quantity = \Request::input('product_quantity');
+		$product_quantity = \Request::input('product_quantity');
+		$order->product_quantity = $product_quantity;
 		$order->date_of_delivery = date('Y-m-d', strtotime(\Request::input('date_of_delivery')));
 		$order->destination = \Request::input('destination');
 		$order->order_number = uniqid(\Request::input('comapny_name'));
 
 		//foreign keys
 
-		$order->product_id = \Request::input('product_id');
-		$order->truck_id = \Request::input('truck_id');
+		$truck_id = \Request::input('truck_id');
+		$product_id = \Request::input('product_id');
+		$order->product_id = $product_id;
+		$order->truck_id = $truck_id;
 		$order->user_id = \Auth::user()->id;
+
+		//change truck's availability flag to not available
+		$truck = \DB::table('trucks')
+		->where('id', $truck_id)
+		->update(['is_available' => 1]);
+
+		//search for the price to calculate total price
+		$product_price = \DB::table('products')
+		->where('id', $product_id)
+		->pluck('price');
+
+		$order->total_price = $product_price * $product_quantity;
 
 		$order->save();
 
@@ -187,6 +214,13 @@ class OrdersController extends Controller {
 	{
 		//
 		$input = Order::findOrFail($id);
+
+		$truck_id = $input->truck_id;
+
+		//change truck's availability flag to available
+		$truck = \DB::table('trucks')
+		->where('id', $truck_id)
+		->update(['is_available' => 0]);
 
 		$input->delete();
 

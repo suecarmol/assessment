@@ -1,5 +1,5 @@
 @extends('app')
-	@include('includes.client_service.sidebar')
+	@include('includes.maintenance.sidebar')
 	@section('content')
 
 		@if (Session::has('message'))
@@ -14,29 +14,35 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">&Oacute;rdenes</h3>
+            <h3 class="box-title">Servicios</h3>
           </div><!-- /.box-header -->
           <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>Compa&ntilde;&iacute;a</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
+                  <th>Inicio de servicio</th>
+                  <th>Fin de servicio</th>
+                  <th>Tipo de servicio</th>
                   <th colspan="2">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-								@foreach($orders as $order)
+								@foreach($services as $service)
 								<tr>
-									<td><a href="{{ action('OrdersController@show', $order->id) }}"> {{ $order->comapny_name }} </a></td>
-									<td> {{ $order->product_quantity }} </td>
-									<td> {{ $order->total_price }} </td>
+									<td><a href="{{ action('ServicesController@show', $service->id) }}"> {{ $service->start_of_service }} </a></td>
 									<td> 
-                    {!! Html::link(route('orders.edit', $order->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
+                    @if($service->end_of_service == null || $service->end_of_service == '1970-01-01 00:00:00')
+                      El cami&oacute;n sigue en servicio.
+                    @else
+                      {{$service->end_of_service}} 
+                    @endif 
+                  </td>
+									<td> {{ $service->type_of_service }} </td>
+									<td> 
+                    {!! Html::link(route('services.edit', $service->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
                   </td>
 									<td> 
-                    {!! Form::open(array('route' => array('orders.destroy', $order->id), 'method' => 'DELETE')) !!}
+                    {!! Form::open(array('route' => array('services.destroy', $service->id), 'method' => 'DELETE')) !!}
                       <button type="submit" class="btn btn-block btn-danger">Borrar</button>
                     {!! Form::close() !!}
                   </td>
@@ -45,9 +51,9 @@
 							</tbody>
 							<tfoot>
                 <tr>
-                  <th>Compa&ntilde;&iacute;a</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
+                  <th>Inicio de servicio</th>
+                  <th>Fin de servicio</th>
+                  <th>Tipo de servicio</th>
                   <th colspan="2">Acciones</th> 
                 </tr>
               </tfoot>

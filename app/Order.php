@@ -14,7 +14,8 @@ class Order extends Model {
 		'date_of_delivery',
 		'destination',
 		'truck_id',
-		'product_id'
+		'product_id', 
+		'total_price'
 
 	];
 

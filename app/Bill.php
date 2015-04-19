@@ -7,5 +7,8 @@ use Carbon\Carbon;
 class Bill extends Model {
 
 	//
+	protected $table 'bills';
+
+	
 
 }

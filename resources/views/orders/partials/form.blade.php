@@ -3,7 +3,7 @@
 		<div class="box-header">
 
 			@if(isset($order))
-				<h3 class="box-title">Actualizar {{$order->company_name}} </h3>
+				<h3 class="box-title">Actualizar Orden {{$order->order_number}} </h3>
 			@else
 				<h3 class="box-title">Crear Orden</h3>
 			@endif
