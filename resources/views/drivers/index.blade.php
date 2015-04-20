@@ -1,5 +1,5 @@
 @extends('app')
-	@include('includes.client_service.sidebar')
+	@include('includes.logistics.sidebar')
 	@section('content')
 
 		@if (Session::has('message'))
