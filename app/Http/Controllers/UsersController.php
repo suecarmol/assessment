@@ -40,6 +40,20 @@ class UsersController extends Controller {
 		$trucks_with_delays_percentage = round(($trucks_with_delays * 100)/$trucks_count, 2);
 		$trucks_in_route_percentage = round(($trucks_in_route * 100)/$trucks_count, 2);
 
+		$tires_count = \DB::table('tires')
+		->count();
+
+		$tires_in_use= \DB::table('tires')
+		->where('is_removed', '=', 1)
+		->count();
+
+		$removed_tires = \DB::table('tires')
+		->where('is_removed', '=', 0)
+		->count();
+
+		$tires_in_use_percentage = ($tires_in_use * 100)/$tires_count;
+		$removed_tires_percentage = ($removed_tires * 100)/$tires_count;
+
 		//returning view
 		return view('users.maintenance')
 		->with('trucks_in_service', $trucks_in_service)
@@ -49,12 +63,41 @@ class UsersController extends Controller {
 		->with('trucks_in_service_percentage', $trucks_in_service_percentage)
 		->with('available_trucks_percentage', $available_trucks_percentage)
 		->with('trucks_with_delays_percentage', $trucks_with_delays_percentage)
-		->with('trucks_in_route_percentage', $trucks_in_route_percentage);
+		->with('trucks_in_route_percentage', $trucks_in_route_percentage)
+		->with('tires_in_use_percentage', $tires_in_use_percentage)
+		->with('removed_tires_percentage', $removed_tires_percentage);
 	}
 
 	public function billing(){
 
-		return view('users.billing');
+		//get count from all bills for percentages
+		$bills_count = \DB::table('bills')
+		->count();
+
+		$paid_bills = \DB::table('bills')
+		->where('is_paid_for', '=', 0)
+		->count();
+
+		$unpaid_bills = \DB::table('bills')
+		->where('is_paid_for', '=', 1)
+		->count();
+
+		$paid_bills_percentage = round(($paid_bills * 100)/$bills_count, 2);
+		$unpaid_bills_percentage = round(($unpaid_bills * 100)/$bills_count, 2);
+
+		$average_price = round(\DB::table('bills')
+		->avg('total_price'), 2);
+
+		$biggest_contributor = round(\DB::table('bills')
+		->max('total_price'), 2);
+
+		return view('users.billing')
+		->with('paid_bills', $paid_bills)
+		->with('unpaid_bills', $unpaid_bills)
+		->with('paid_bills_percentage', $paid_bills_percentage)
+		->with('unpaid_bills_percentage', $unpaid_bills_percentage)
+		->with('average_price', $average_price)
+		->with('biggest_contributor', $biggest_contributor);
 	}
 
 	public function client_service(){

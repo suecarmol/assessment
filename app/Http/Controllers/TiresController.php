@@ -58,7 +58,15 @@ class TiresController extends Controller {
 		$tire->serial_number = \Request::input('serial_number');
 		$tire->date_added_to_truck = date('Y-m-d', strtotime(\Request::input('date_added_to_truck')));
 		$tire->date_last_service = date('Y-m-d', strtotime(\Request::input('date_last_service')));
-		$tire->date_removed = date('Y-m-d', strtotime(\Request::input('date_removed')));
+		$date_removed = date('Y-m-d', strtotime(\Request::input('date_removed')))
+		$tire->date_removed = $date_removed;
+		//check if date removed is different from default
+		if($date_removed != '1970-01-01 00:00:00'){
+			$tire->is_removed = 0;
+		}
+		else{
+			$tire->is_removed = 1;
+		}
 		$tire->truck_id = \Request::input('truck_id');
 
 		$tire->save();
