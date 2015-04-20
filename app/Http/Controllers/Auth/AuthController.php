@@ -1,12 +1,9 @@
 <?php namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
 class AuthController extends Controller {
-
 	/*
 	|--------------------------------------------------------------------------
 	| Registration & Login Controller
@@ -18,9 +15,9 @@ class AuthController extends Controller {
 	|
 	*/
 
+	protected $redirectTo = '/users';
 	use AuthenticatesAndRegistersUsers;
-
-
+	
 	/*if(Auth::user()->user_type == 'admin'){
 		protected $redirectTo = '/users';
 	}
@@ -42,8 +39,6 @@ class AuthController extends Controller {
 	else{
 		protected $redirectTo = '/auth/login';
 	}*/
-
-
 	/**
 	 * Create a new authentication controller instance.
 	 *
@@ -55,8 +50,6 @@ class AuthController extends Controller {
 	{
 		$this->auth = $auth;
 		$this->registrar = $registrar;
-
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
-
 }

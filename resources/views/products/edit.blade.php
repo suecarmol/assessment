@@ -1,5 +1,9 @@
 @extends('app')
-	@include('includes.admin.sidebar')
+	@if(\Auth::user()->user_type == 'admin')
+	 @include('includes.admin.sidebar')
+  @else
+    @include('includes.bills.sidebar') 
+  @endif 
 	@section('content')
 		@include('products.partials.form')
 		@if($errors->has())

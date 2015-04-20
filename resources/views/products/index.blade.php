@@ -1,7 +1,12 @@
 
 @extends('app')
+  
+  @if(\Auth::user()->user_type == 'admin')
+	 @include('includes.admin.sidebar')
+  @else
+    @include('includes.bills.sidebar') 
+  @endif  
 
-	@include('includes.admin.sidebar')
 	@section('content')
 
     @if (Session::has('message'))

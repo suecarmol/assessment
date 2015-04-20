@@ -35,6 +35,12 @@ Route::post('trucks', 'TrucksController@store');
 Route::resource('trucks', 'TrucksController');
 
 //Users Routes
+Route::get('/users/maintenance', 'UsersController@maintenance');
+Route::get('/users/billing', 'UsersController@billing');
+Route::get('/users/admin', 'UsersController@admin');
+Route::get('/users/client_service', 'UsersController@client_service');
+Route::get('/users/logistics', 'UsersController@logistics');
+Route::get('/users/client', 'UsersController@client');
 Route::post('users', 'UsersController@store');
 Route::resource('users', 'UsersController');
 

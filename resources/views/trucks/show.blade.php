@@ -1,5 +1,11 @@
 @extends('app')
-	@include('includes.admin.sidebar')
+	@if(\Auth::user()->user_type == 'admin')
+	 @include('includes.admin.sidebar')
+  @elseif(\Auth::user()->user_type == 'maintenance') 
+    @include('includes.maintenance.sidebar')
+  @else
+    @include('includes.logistics.sidebar')
+  @endif  
 	@section('content')
 
 	<div class="col-md-12">

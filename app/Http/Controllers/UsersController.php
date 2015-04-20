@@ -8,6 +8,69 @@ use App\Http\Requests\UsersForm;
 
 class UsersController extends Controller {
 
+
+	public function maintenance(){
+
+		//get count from all trucks for percentages
+		$trucks_count = \DB::table('trucks')
+		->count();
+
+		//getting basic stats for maintenance page
+		$trucks_in_service = \DB::table('trucks')
+		->where('is_in_service', '=', 1)
+		->count();
+
+		$available_trucks = \DB::table('trucks')
+		->where('is_available', '=', 0)
+		->where('is_in_service', '=', 0)
+		->count();
+
+		$trucks_with_delays = \DB::table('services')
+		->where('number_of_delays', '>', 0)
+		->count();
+
+		$trucks_in_route = \DB::table('trucks')
+		->where('is_available', '=', 1)
+		->where('is_in_service', '=', 0)
+		->count();
+
+		//percentages
+		$trucks_in_service_percentage = round(($trucks_in_service * 100)/$trucks_count, 2);
+		$available_trucks_percentage = round(($available_trucks * 100)/$trucks_count, 2);
+		$trucks_with_delays_percentage = round(($trucks_with_delays * 100)/$trucks_count, 2);
+		$trucks_in_route_percentage = round(($trucks_in_route * 100)/$trucks_count, 2);
+
+		//returning view
+		return view('users.maintenance')
+		->with('trucks_in_service', $trucks_in_service)
+		->with('available_trucks', $available_trucks)
+		->with('trucks_with_delays', $trucks_with_delays)
+		->with('trucks_in_route', $trucks_in_route)
+		->with('trucks_in_service_percentage', $trucks_in_service_percentage)
+		->with('available_trucks_percentage', $available_trucks_percentage)
+		->with('trucks_with_delays_percentage', $trucks_with_delays_percentage)
+		->with('trucks_in_route_percentage', $trucks_in_route_percentage);
+	}
+
+	public function billing(){
+
+		return view('users.billing');
+	}
+
+	public function client_service(){
+
+		return view('users.client_service');
+	}
+
+	public function client(){
+
+		return view('users.client');
+	}
+
+	public function logistics(){
+
+		return view('users.logistics');
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
