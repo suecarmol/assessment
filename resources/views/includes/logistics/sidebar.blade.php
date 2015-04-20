@@ -29,21 +29,25 @@
             <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-truck"></i> <span>Camiones</span> <i class="fa fa-angle-left pull-right"></i> </a> 
               <ul class="treeview-menu">
                     <li><a href="{{ action('TrucksController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Camiones</a></li>
-                    <li><a href="{{ action('TrucksController@create') }}"><i class="fa fa-circle-o"></i> Crear Camiones</a></li>
+                    <li><a href="{{ action('TrucksController@create') }}"><i class="fa fa-circle-o"></i> Crear Cami&oacute;n</a></li>
               </ul>
             </li>
-
-            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-tachometer"></i> <span>Llantas</span>  <i class="fa fa-angle-left pull-right"></i> </a> 
-                <ul class="treeview-menu">
-                    <li><a href="{{ action('TiresController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Llantas</a></li>
-                    <li><a href="{{ action('TiresController@create') }}"><i class="fa fa-circle-o"></i> Crear Llanta</a></li>
-                </ul>
-            </li>
-
-           <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-wrench"></i> <span>Servicios</span>  <i class="fa fa-angle-left pull-right"></i>  </a> 
+            <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-users"></i> <span>Choferes</span>  <i class="fa fa-angle-left pull-right"></i>  </a> 
               <ul class="treeview-menu">
-                    <li><a href="{{ action('ServicesController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Servicios</a></li>
-                    <li><a href="{{ action('ServicesController@create') }}"><i class="fa fa-circle-o"></i> Crear Servicio</a></li>
+                    <li><a href="{{ action('DriversController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Choferes</a></li>
+                    <li><a href="{{ action('DriversController@create') }}"><i class="fa fa-circle-o"></i> Crear Chofer</a></li>
+              </ul>
+            </li>
+             <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-pencil"></i> <span>Asignaciones</span>  <i class="fa fa-angle-left pull-right"></i>  </a> 
+              <ul class="treeview-menu">
+                    <li><a href="{{ action('TrucksDriversController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Asignaciones</a></li>
+                    <li><a href="{{ action('TrucksDriversController@create') }}"><i class="fa fa-circle-o"></i> Crear Asignaci&oacute;n</a></li>
+              </ul>
+            </li>
+             <li class="treeview"> <a href= "#"> <i class="fa fa-fw fa-location-arrow"></i> <span>Rutas</span>  <i class="fa fa-angle-left pull-right"></i>  </a> 
+              <ul class="treeview-menu">
+                    <li><a href="{{ action('RoutesController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Rutas</a></li>
+                    <li><a href="{{ action('RoutesController@create') }}"><i class="fa fa-circle-o"></i> Crear Ruta</a></li>
               </ul>
             </li>
         </ul>    

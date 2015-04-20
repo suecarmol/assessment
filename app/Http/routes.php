@@ -58,8 +58,13 @@ Route::resource('drivers', 'DriversController');
 Route::post('bills', 'BillsController@store');
 Route::resource('bills', 'BillsController');
 
+//Trucks_Drivers Routes
+Route::post('drivers_trucks', 'TrucksDriversController@store');
+Route::resource('drivers_trucks', 'TrucksDriversController');
 
-
+//Routes Routes
+Route::post('routes', 'RoutesController@store');
+Route::resource('routes', 'RoutesController');
 
 
 

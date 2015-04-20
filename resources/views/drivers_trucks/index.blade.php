@@ -1,5 +1,5 @@
 @extends('app')
-	@include('includes.billing.sidebar')
+	@include('includes.logistics.sidebar')
 	@section('content')
 
 		@if (Session::has('message'))
@@ -14,29 +14,29 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Facturas</h3>
+            <h3 class="box-title">Asignaci&oacute;n de Choferes a Camiones</h3>
           </div><!-- /.box-header -->
           <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>Compa&ntilde;&iacute;a</th>
-                  <th>Cantidad entregada</th>
-                  <th>Precio</th>
+                  <th>Cami&oacute;n</th>
+                  <th>Chofer</th>
+                  <th>Fecha de asignaci&oacute;n</th>
                   <th colspan="2">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-								@foreach($bills as $bill)
+								@foreach($truck_driver as $truck_driver)
 								<tr>
-									<td><a href="{{ action('BillsController@show', $bill->id) }}"> {{ $bill->company_name }} </a></td>
-									<td> {{ $bill->quantity_delivered }} </td>
-									<td> {{ $bill->total_price }} </td>
+									<td><a href="{{ action('TrucksDriversController@show', $truck_driver->id) }}"> {{ $truck_driver->truck_id }} </a></td>
+									<td> {{ $truck_driver->driver_id }} </td>
+									<td> {{ $truck_driver->date_assigned }} </td>
 									<td> 
-                    {!! Html::link(route('bills.edit', $bill->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
+                    {!! Html::link(route('drivers_trucks.edit', $truck_driver->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
                   </td>
 									<td> 
-                    {!! Form::open(array('route' => array('bills.destroy', $bill->id), 'method' => 'DELETE')) !!}
+                    {!! Form::open(array('route' => array('drivers_trucks.destroy', $truck_driver->id), 'method' => 'DELETE')) !!}
                       <button type="submit" class="btn btn-block btn-danger">Borrar</button>
                     {!! Form::close() !!}
                   </td>
@@ -45,10 +45,10 @@
 							</tbody>
 							<tfoot>
                 <tr>
-                  <th>Compa&ntilde;&iacute;a</th>
-                  <th>Cantidad entregada</th>
-                  <th>Precio</th>
-                  <th colspan="2">Acciones</th> 
+                  <th>Cami&oacute;n</th>
+                  <th>Chofer</th>                  
+                  <th>Fecha de asignaci&oacute;n</th>
+                  <th>Acciones</th>
                 </tr>
               </tfoot>
             </table>

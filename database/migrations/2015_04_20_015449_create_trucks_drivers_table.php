@@ -14,28 +14,24 @@ class CreateTrucksDriversTable extends Migration {
 	{
 		Schema::create('trucks_drivers', function(Blueprint $table)
 		{
-			
+			$table->increments('id');
 			$table->integer('truck_id')->unsigned();
 			$table->integer('driver_id')->unsigned();
-
-			$table->primary(array('truck_id', 'driver_id'));
 			$table->timestamp('date_assigned');
-
 			$table->timestamps();
 		});
 
-		Schema::table('trucks_drivers', function($table) {
+		Schema::table('trucks_drivers', function(Blueprint $table)
+		{
+			$table->foreign('driver_id')
+      ->references('id')->on('drivers')
+      ->onDelete('cascade');
 
       $table->foreign('truck_id')
       ->references('id')->on('trucks')
       ->onDelete('cascade');
 
-      $table->foreign('driver_id')
-      ->references('id')->on('drivers')
-      ->onDelete('cascade');
-
-    });
-
+		});
 	}
 
 	/**
