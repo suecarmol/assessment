@@ -35,10 +35,20 @@ class UsersController extends Controller {
 		->count();
 
 		//percentages
-		$trucks_in_service_percentage = round(($trucks_in_service * 100)/$trucks_count, 2);
-		$available_trucks_percentage = round(($available_trucks * 100)/$trucks_count, 2);
-		$trucks_with_delays_percentage = round(($trucks_with_delays * 100)/$trucks_count, 2);
-		$trucks_in_route_percentage = round(($trucks_in_route * 100)/$trucks_count, 2);
+		if($trucks_count > 0)
+		{
+			$trucks_in_service_percentage = round(($trucks_in_service * 100)/$trucks_count, 2);
+			$available_trucks_percentage = round(($available_trucks * 100)/$trucks_count, 2);
+			$trucks_with_delays_percentage = round(($trucks_with_delays * 100)/$trucks_count, 2);
+			$trucks_in_route_percentage = round(($trucks_in_route * 100)/$trucks_count, 2);
+		}
+		else
+		{
+			$trucks_in_service_percentage = 0.0;
+			$available_trucks_percentage = 0.0;
+			$trucks_with_delays_percentage = 0.0;
+			$trucks_in_route_percentage = 0.0;
+		}
 
 		$tires_count = \DB::table('tires')
 		->count();
@@ -51,8 +61,15 @@ class UsersController extends Controller {
 		->where('is_removed', '=', 0)
 		->count();
 
-		$tires_in_use_percentage = ($tires_in_use * 100)/$tires_count;
-		$removed_tires_percentage = ($removed_tires * 100)/$tires_count;
+		if($tires_count > 0){
+			$tires_in_use_percentage = round(($tires_in_use * 100)/$tires_count, 2);
+			$removed_tires_percentage = round(($removed_tires * 100)/$tires_count, 2);
+		}
+		else
+		{
+			$tires_in_use_percentage = 0.0;
+			$removed_tires_percentage = 0.0;
+		}
 
 		//returning view
 		return view('users.maintenance')
@@ -81,9 +98,16 @@ class UsersController extends Controller {
 		$unpaid_bills = \DB::table('bills')
 		->where('is_paid_for', '=', 1)
 		->count();
-
-		$paid_bills_percentage = round(($paid_bills * 100)/$bills_count, 2);
-		$unpaid_bills_percentage = round(($unpaid_bills * 100)/$bills_count, 2);
+	
+		if($bills_count > 0)
+		{
+			$paid_bills_percentage = round(($paid_bills * 100)/$bills_count, 2);
+			$unpaid_bills_percentage = round(($unpaid_bills * 100)/$bills_count, 2);
+		}
+		else{
+			$paid_bills_percentage = 0.0;
+			$unpaid_bills_percentage = 0.0;
+		}
 
 		$average_price = round(\DB::table('bills')
 		->avg('total_price'), 2);
@@ -102,7 +126,46 @@ class UsersController extends Controller {
 
 	public function client_service(){
 
-		return view('users.client_service');
+		$average_prices_per_order = round(\DB::table('orders')
+		->avg('total_price'), 2);
+
+		$average_quantity_per_order = round(\DB::table('orders')
+		->avg('product_quantity'), 2);
+
+		$top_5_customers = \DB::table('orders')
+		->select('comapny_name', \DB::raw('sum(total_price) as revenue'))
+		->groupBy('comapny_name')
+		->orderBy('revenue', 'desc')
+		->get();
+
+		$top_5 = array();
+		$total_revenue = 0.0;
+
+		
+		$total_revenue = \DB::table('orders')
+		->select(\DB::raw('sum(total_price) as total_revenue'))
+		->pluck('total_revenue');
+
+		if($total_revenue > 0)
+		{		
+			foreach ($top_5_customers as $customer) {
+				$top_5 [] = array(
+					'comapny_name' => $customer->comapny_name,
+					'percentage' => round( ($customer->revenue*100)/$total_revenue, 2)
+				);
+			}
+		}
+		else{
+			$top_5 [] = array(
+					'comapny_name' => 0.0,
+					'percentage' => 0.0
+				);
+		}	
+
+		return view('users.client_service')
+		->with('average_prices_per_order', $average_prices_per_order)
+		->with('average_quantity_per_order', $average_quantity_per_order)
+		->with('top_5', $top_5);
 	}
 
 	public function client(){
@@ -114,6 +177,38 @@ class UsersController extends Controller {
 
 		return view('users.logistics');
 	}
+
+	public function admin(){
+		return view('users.admin');
+	}
+
+	public function redirect(){
+
+		//Since the AuthController redirects to /users, 
+		//the application will redirect to the actual
+		//view
+
+		if(\Auth::user()->user_type == 'admin')
+		{
+			return redirect('/users/admin');
+		}
+		elseif(\Auth::user()->user_type == 'billing'){
+			return redirect('/users/billing');
+		}	
+		elseif(\Auth::user()->user_type == 'client_service'){
+			return redirect('/users/client_service');
+		}
+		elseif(\Auth::user()->user_type == 'client'){
+			return redirect('/users/client');
+		}
+		elseif(\Auth::user()->user_type == 'maintenance'){
+			return redirect('/users/maintenance');
+		}
+		else{
+			return redirect('/users/logistics');
+		}
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -121,8 +216,8 @@ class UsersController extends Controller {
 	 */
 	public function index()
 	{
-		//
 
+		//creating users table
 		$users = User::all();
 		return view('users.index', compact('users'));
 	}

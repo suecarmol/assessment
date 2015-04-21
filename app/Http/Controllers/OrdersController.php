@@ -93,11 +93,10 @@ class OrdersController extends Controller {
 
 		//search for the price to calculate total price
 		$product_price = \DB::table('products')
-		->select('price')
 		->where('id', $product_id)
-		->get();
+		->pluck('price');
 
-		$order->total_price = $product_price * $product_quantity;
+		$order->total_price = round($product_price * $product_quantity, 2);
 
 		$order->save();
 

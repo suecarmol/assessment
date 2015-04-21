@@ -4,7 +4,7 @@
   @if(\Auth::user()->user_type == 'admin')
 	 @include('includes.admin.sidebar')
   @else
-    @include('includes.bills.sidebar') 
+    @include('includes.billing.sidebar') 
   @endif  
 
 	@section('content')

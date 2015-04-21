@@ -17,8 +17,11 @@
 					<h5> {{ $tire->date_last_service }} </h5>
 
 					<h4>Removida del cami&oacute;n</h4>
-					<h5> {{$tire->date_removed}} </h5>
-
+					@if($tire->date_removed != '1970-01-01 00:00:00')
+						<h5> {{$tire->date_removed}} </h5>
+					@else
+						<h5>Esta llanta sigue en el cami&oacute;n</h5>	
+					@endif	
 					<h4>Cami&oacute;n</h4>
 					<h5> {{$tire->truck_id}} </h5>
 

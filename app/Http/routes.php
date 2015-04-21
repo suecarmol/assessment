@@ -35,6 +35,7 @@ Route::post('trucks', 'TrucksController@store');
 Route::resource('trucks', 'TrucksController');
 
 //Users Routes
+Route::get('/users/redirect', 'UsersController@redirect');
 Route::get('/users/maintenance', 'UsersController@maintenance');
 Route::get('/users/billing', 'UsersController@billing');
 Route::get('/users/admin', 'UsersController@admin');

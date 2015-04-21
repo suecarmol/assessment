@@ -30,7 +30,9 @@ class ServicesController extends Controller {
 	public function create()
 	{
 		//
-		$trucks_query = \DB::table('trucks')->get();
+		$trucks_query = \DB::table('trucks')
+		->where('is_available', '=', 0)
+		->get();
 		$trucks = array();
 
 		foreach ($trucks_query as $truck) {
@@ -53,7 +55,8 @@ class ServicesController extends Controller {
 		$service = new Service;
 
 		$service->start_of_service = date('Y-m-d', strtotime(\Request::input('start_of_service')));
-		$service->end_of_service = date('Y-m-d', strtotime(\Request::input('end_of_service')));
+		$end_of_service = date('Y-m-d', strtotime(\Request::input('end_of_service')));
+		$service->end_of_service = $end_of_service;
 		$service->type_of_service = \Request::input('type_of_service');
 		$service->number_of_delays = \Request::input('number_of_delays');
 		//foreign keys
@@ -64,9 +67,18 @@ class ServicesController extends Controller {
 		$service->service_number = uniqid(\Request::input('type_of_service'));
 
 		//change truck's availability flag to not available
-		$truck = \DB::table('trucks')
-		->where('id', $truck_id)
-		->update(['is_in_service' => 1]);
+		if($end_of_service == '1970-01-01')
+		{
+			$truck = \DB::table('trucks')
+			->where('id', $truck_id)
+			->update(['is_in_service' => 1]);
+		}
+		else
+		{
+			$truck = \DB::table('trucks')
+			->where('id', $truck_id)
+			->update(['is_in_service' => 0]);
+		}
 
 		$service->save();
 
@@ -99,7 +111,9 @@ class ServicesController extends Controller {
 		//
 		$service = Service::findOrFail($id);
 
-		$trucks_query = \DB::table('trucks')->get();
+		$trucks_query = \DB::table('trucks')
+		->where('is_available', '=', 0)
+		->get();
 		$trucks = array();
 
 		foreach ($trucks_query as $truck) {
@@ -122,8 +136,10 @@ class ServicesController extends Controller {
 		//
 		$service = Service::findOrFail($id);
 
+
 		$service->start_of_service = date('Y-m-d', strtotime(\Request::input('start_of_service')));
-		$service->end_of_service = date('Y-m-d', strtotime(\Request::input('end_of_service')));
+		$end_of_service = date('Y-m-d', strtotime(\Request::input('end_of_service')));
+		$service->end_of_service = $end_of_service;
 		$service->type_of_service = \Request::input('type_of_service');
 		$service->number_of_delays = \Request::input('number_of_delays');
 		//foreign keys
@@ -134,9 +150,18 @@ class ServicesController extends Controller {
 		$service->service_number = uniqid(\Request::input('type_of_service'));
 
 		//change truck's availability flag to not available
-		$truck = \DB::table('trucks')
-		->where('id', $truck_id)
-		->update(['is_in_service' => 1]);
+		if($end_of_service == '1970-01-01')
+		{
+			$truck = \DB::table('trucks')
+			->where('id', $truck_id)
+			->update(['is_in_service' => 1]);
+		}
+		else
+		{
+			$truck = \DB::table('trucks')
+			->where('id', $truck_id)
+			->update(['is_in_service' => 0]);
+		}
 
 		$service->save();
 

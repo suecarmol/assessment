@@ -57,7 +57,8 @@
 					<div class="input-group-addon"> <i class="fa fa-calendar"></i></div>
 					{!! Form::text('date_last_service', null, [
 						'class' => 'form-control',
-						'data-provide'=> 'datepicker'
+						'data-provide'=> 'datepicker',
+						'placeholder' => 'Fecha del &uacute;ltimo servicio'
 					]) !!}
 				</div>
 			</div>
