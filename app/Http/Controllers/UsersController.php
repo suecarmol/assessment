@@ -136,11 +136,10 @@ class UsersController extends Controller {
 		->select('comapny_name', \DB::raw('sum(total_price) as revenue'))
 		->groupBy('comapny_name')
 		->orderBy('revenue', 'desc')
+		->take(5)
 		->get();
 
 		$top_5 = array();
-		$total_revenue = 0.0;
-
 		
 		$total_revenue = \DB::table('orders')
 		->select(\DB::raw('sum(total_price) as total_revenue'))
@@ -151,7 +150,7 @@ class UsersController extends Controller {
 			foreach ($top_5_customers as $customer) {
 				$top_5 [] = array(
 					'comapny_name' => $customer->comapny_name,
-					'percentage' => round( ($customer->revenue*100)/$total_revenue, 2)
+					'percentage' => round(($customer->revenue*100)/$total_revenue, 2)
 				);
 			}
 		}
@@ -162,24 +161,147 @@ class UsersController extends Controller {
 				);
 		}	
 
+		$best_client = \DB::table('orders')
+		->select(\DB::raw('comapny_name, sum(total_price) as revenue'))
+		->groupBy('comapny_name')
+		->orderBy('revenue', 'desc')
+		->pluck('revenue');
+
+		$more_orders = \DB::table('orders')
+		->select(\DB::raw('comapny_name, count(order_number) as order_count'))
+		->groupBy('comapny_name')
+		->orderBy('order_count', 'desc')
+		->pluck('order_count');
+
 		return view('users.client_service')
 		->with('average_prices_per_order', $average_prices_per_order)
 		->with('average_quantity_per_order', $average_quantity_per_order)
-		->with('top_5', $top_5);
+		->with('top_5', $top_5)
+		->with('best_client', $best_client)
+		->with('more_orders', $more_orders);
 	}
 
 	public function client(){
 
-		return view('users.client');
+		$user_company = \Auth::user()->company;
+		$user_id = \Auth::user()->id;
+
+		$total_company_orders = \DB::table('orders')
+		->where('comapny_name', '=', $user_company)
+		->count();
+
+		$total_user_orders = \DB::table('orders')
+		->where('user_id', '=', $user_id)
+		->count();
+
+		$unpaid_orders = \DB::table('orders')
+		->where('user_id', '=', $user_id)
+		->where('is_paid', '=', 1)
+		->count();
+
+		$paid_orders = \DB::table('orders')
+		->where('user_id', '=', $user_id)
+		->where('is_paid', '=', 0)
+		->count();
+
+		return view('users.clients')
+		->with('total_company_orders', $total_company_orders)
+		->with('total_user_orders',$total_user_orders)
+		->with('unpaid_orders', $unpaid_orders)
+		->with('paid_orders', $paid_orders);
 	}
 
 	public function logistics(){
 
-		return view('users.logistics');
+		$total_drivers = \DB::table('drivers')
+		->count();
+		$available_drivers = \DB::table('drivers')
+		->where('is_available', '=', 0)
+		->count();
+
+		$total_trucks = \DB::table('trucks')
+		->count();
+		$available_trucks = \DB::table('trucks')
+		->where('is_available', '=', 0)
+		->count();
+		$trucks_in_route = \DB::table('trucks')
+		->where('is_available', '=', 1)
+		->where('is_in_service', '=', 0)
+		->count();
+		$trucks_in_service = \DB::table('trucks')
+		->where('is_in_service', '=', 1)
+		->count();
+
+		$total_routes = \DB::table('routes')
+		->count();
+
+		$most_frecuent_destination = \DB::table('routes')
+		->select(\DB::raw('destination, count(destination) as destination_count'))
+		->groupBy('destination')
+		->orderBy('destination_count')
+		->pluck('destination');
+
+
+		return view('users.logistics')
+		->with('total_drivers', $total_drivers)
+		->with('available_drivers', $available_drivers)
+		->with('total_trucks', $total_trucks)
+		->with('available_trucks', $available_trucks)
+		->with('trucks_in_route', $trucks_in_route)
+		->with('trucks_in_service', $trucks_in_service)
+		->with('total_routes', $total_routes)
+		->with('most_frecuent_destination', $most_frecuent_destination);
 	}
 
 	public function admin(){
-		return view('users.admin');
+
+		$client_number = \DB::table('users')
+		->select(\DB::raw('count(distinct user_type) as client_count'))
+		->where('user_type', '=', 'client')
+		->pluck('client_count');
+
+		$top_5 = array();
+
+		$top_5_products = \DB::table('orders')
+		->select(\DB::raw('product_id, count(order_number) as order_count'))
+		->groupBy('product_id')
+		->orderBy('order_count', 'desc')
+		->take(5)
+		->get();
+
+		$total_orders = \DB::table('orders')
+		->select(\DB::raw('count(order_number) as total_orders'))
+		->pluck('total_orders');
+
+		if($total_orders > 0)
+		{
+			foreach ($top_5_products as $product) {
+				$top_5 [] = array(
+					'product_name' => \DB::table('products')->where('id', $product->product_id)->pluck('product_name'),
+					'percentage' => round( ($product->order_count * 100)/$total_orders, 2)
+				);
+			}
+		}
+		else
+		{
+			$top_5 [] = array(
+					'product_name' => 'N/A',
+					'percentage' => 0.0
+				);
+		}
+
+		$number_of_trucks = \DB::table('trucks')->count();
+
+		$average_price = round(\DB::table('products')->avg('price'), 2);
+
+		$number_of_products = \DB::table('products')->count();
+
+		return view('users.admin')
+		->with('client_number', $client_number)
+		->with('top_5', $top_5)
+		->with('number_of_trucks', $number_of_trucks)
+		->with('average_price', $average_price)
+		->with('number_of_products', $number_of_products);
 	}
 
 	public function redirect(){
@@ -199,7 +321,7 @@ class UsersController extends Controller {
 			return redirect('/users/client_service');
 		}
 		elseif(\Auth::user()->user_type == 'client'){
-			return redirect('/users/client');
+			return redirect('/users/clients');
 		}
 		elseif(\Auth::user()->user_type == 'maintenance'){
 			return redirect('/users/maintenance');

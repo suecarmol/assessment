@@ -76,6 +76,8 @@ class OrdersController extends Controller {
 		$order->date_of_delivery = date('Y-m-d', strtotime(\Request::input('date_of_delivery')));
 		$order->destination = \Request::input('destination');
 		$order->order_number = uniqid(\Request::input('comapny_name'));
+		//orders and unpaid for by default
+		$order->is_paid = 1;
 
 		//foreign keys
 
@@ -177,6 +179,8 @@ class OrdersController extends Controller {
 		$order->date_of_delivery = date('Y-m-d', strtotime(\Request::input('date_of_delivery')));
 		$order->destination = \Request::input('destination');
 		$order->order_number = uniqid(\Request::input('comapny_name'));
+		//orders are unpaid for by default
+		$order->order_number = 1;
 
 		//foreign keys
 

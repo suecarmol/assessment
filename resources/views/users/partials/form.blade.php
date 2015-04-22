@@ -39,14 +39,16 @@
 						'placeholder' => 'Correo electr&oacute;nico'
 					]) !!}
 				</div>
-				{!! Form::label('password', 'Contrase&ntilde;a') !!}
-				<div class="input-group">	
-					<div class="input-group-addon"> <i class="fa fa-fw fa-key"></i></div>
-					{!! Form::password('password',[
-						'class' => 'form-control',
-						'placeholder' => 'Contrase&ntilde;a'
-					]) !!}
-				</div>
+				@if(!isset($user))
+					{!! Form::label('password', 'Contrase&ntilde;a') !!}
+					<div class="input-group">	
+						<div class="input-group-addon"> <i class="fa fa-fw fa-key"></i></div>
+						{!! Form::password('password',[
+							'class' => 'form-control',
+							'placeholder' => 'Contrase&ntilde;a'
+						]) !!}
+					</div>
+				@endif	
 				<div class="form-group">	
 					{!! Form::label('company', 'Compa&ntilde;&iacute;a') !!}
 					{!! Form::text('company', null, [
