@@ -16,6 +16,12 @@ class OrdersController extends Controller {
 	public function index()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$orders = Order::all();
 
 		return view('orders.index', compact('orders'));
@@ -30,6 +36,11 @@ class OrdersController extends Controller {
 	public function create()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		$products = array();
 		$trucks = array();
@@ -116,6 +127,11 @@ class OrdersController extends Controller {
 	public function show($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		$order = Order::findOrFail($id);
 
@@ -131,6 +147,11 @@ class OrdersController extends Controller {
 	public function edit($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		$order = Order::findOrFail($id);
 

@@ -11,6 +11,18 @@ class UsersController extends Controller {
 
 	public function maintenance(){
 
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
+		//check if user is allowed in this view
+		if(\Auth::user()->user_type != 'maintenance')
+		{
+			return redirect('users/'. \Auth::user()->user_type);
+		}
+
 		//get count from all trucks for percentages
 		$trucks_count = \DB::table('trucks')
 		->count();
@@ -87,6 +99,18 @@ class UsersController extends Controller {
 
 	public function billing(){
 
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
+		//check if user is allowed in this view
+		if(\Auth::user()->user_type != 'billing')
+		{
+			return redirect('users/'. \Auth::user()->user_type);
+		}
+
 		//get count from all bills for percentages
 		$bills_count = \DB::table('bills')
 		->count();
@@ -125,6 +149,18 @@ class UsersController extends Controller {
 	}
 
 	public function client_service(){
+
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
+		//check if user is allowed in this view
+		if(\Auth::user()->user_type != 'client_service')
+		{
+			return redirect('users/'. \Auth::user()->user_type);
+		}
 
 		$average_prices_per_order = round(\DB::table('orders')
 		->avg('total_price'), 2);
@@ -183,6 +219,18 @@ class UsersController extends Controller {
 
 	public function client(){
 
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
+		//check if user is allowed in this view
+		if(\Auth::user()->user_type != 'client')
+		{
+			return redirect('users/'. \Auth::user()->user_type);
+		}
+
 		$user_company = \Auth::user()->company;
 		$user_id = \Auth::user()->id;
 
@@ -204,7 +252,7 @@ class UsersController extends Controller {
 		->where('is_paid', '=', 0)
 		->count();
 
-		return view('users.clients')
+		return view('users.client')
 		->with('total_company_orders', $total_company_orders)
 		->with('total_user_orders',$total_user_orders)
 		->with('unpaid_orders', $unpaid_orders)
@@ -212,6 +260,18 @@ class UsersController extends Controller {
 	}
 
 	public function logistics(){
+
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
+		//check if user is allowed in this view
+		if(\Auth::user()->user_type != 'logistics')
+		{
+			return redirect('users/'. \Auth::user()->user_type);
+		}
 
 		$total_drivers = \DB::table('drivers')
 		->count();
@@ -254,6 +314,18 @@ class UsersController extends Controller {
 	}
 
 	public function admin(){
+
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
+		//check if user is allowed in this view
+		if(\Auth::user()->user_type != 'admin')
+		{
+			return redirect('users/'. \Auth::user()->user_type);
+		}
 
 		$client_number = \DB::table('users')
 		->select(\DB::raw('count(distinct user_type) as client_count'))
@@ -321,7 +393,7 @@ class UsersController extends Controller {
 			return redirect('/users/client_service');
 		}
 		elseif(\Auth::user()->user_type == 'client'){
-			return redirect('/users/clients');
+			return redirect('/users/client');
 		}
 		elseif(\Auth::user()->user_type == 'maintenance'){
 			return redirect('/users/maintenance');
@@ -339,6 +411,12 @@ class UsersController extends Controller {
 	public function index()
 	{
 
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		//creating users table
 		$users = User::all();
 		return view('users.index', compact('users'));
@@ -352,6 +430,12 @@ class UsersController extends Controller {
 	public function create()
 	{
 		//
+
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		return view('users.create');
 	}
@@ -389,6 +473,12 @@ class UsersController extends Controller {
 	{
 		//
 
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$user = User::findOrFail($id);
 
 
@@ -403,6 +493,11 @@ class UsersController extends Controller {
 	 */
 	public function edit($id)
 	{
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 		//
 		$user = User::findOrFail($id);
 
@@ -443,6 +538,7 @@ class UsersController extends Controller {
 	public function destroy($id)
 	{
 		//
+
 		$input = User::findOrFail($id);
 
 		$input->delete();

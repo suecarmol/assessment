@@ -17,6 +17,12 @@ class ServicesController extends Controller {
 	public function index()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$services = Service::all();
 
 		return view('services.index', compact('services'));
@@ -30,6 +36,12 @@ class ServicesController extends Controller {
 	public function create()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$trucks_query = \DB::table('trucks')
 		->where('is_available', '=', 0)
 		->get();
@@ -95,6 +107,12 @@ class ServicesController extends Controller {
 	public function show($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		} 
+
 		$service = Service::findOrFail($id);
 
 		return view('services.show', compact('service'));
@@ -109,6 +127,12 @@ class ServicesController extends Controller {
 	public function edit($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+		
 		$service = Service::findOrFail($id);
 
 		$trucks_query = \DB::table('trucks')

@@ -1,5 +1,5 @@
 @extends('app')
-  @include('includes.billing.sidebar')
+  @include('includes.clients.sidebar')
   @section('content')
   <div class="row">
       <div class="col-lg-3 col-xs-6">

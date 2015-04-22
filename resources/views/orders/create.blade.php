@@ -1,5 +1,9 @@
 @extends('app')
-	@include('includes.client_service.sidebar')
+	@if(\Auth::user()->user_type == 'client_service')
+		@include('includes.client_service.sidebar')
+	@else
+		@include('includes.clients.sidebar')
+	@endif		
 	@section('content')
 		@include('orders.partials.form')
 

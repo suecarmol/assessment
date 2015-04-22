@@ -14,6 +14,12 @@ class ProductsController extends Controller {
 	//
 	public function index(){
 
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$products = Product::all();
 
 		return view('products.index', compact('products'));
@@ -24,6 +30,12 @@ class ProductsController extends Controller {
 	}
 
 	public function create(){
+
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		return view('products.create');
 
@@ -42,6 +54,12 @@ class ProductsController extends Controller {
 	}
 
 	public function edit($id){
+
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		$product = Product::findOrFail($id);
 

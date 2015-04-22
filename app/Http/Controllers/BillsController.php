@@ -17,6 +17,12 @@ class BillsController extends Controller {
 	public function index()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$bills = Bill::all();
 
 		return view('bills.index', compact('bills'));
@@ -30,6 +36,12 @@ class BillsController extends Controller {
 	public function create()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$drivers = array();
 		$drivers_query = \DB::table('drivers')->get();
 
@@ -79,6 +91,12 @@ class BillsController extends Controller {
 	public function show($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$bill = Bill::findOrFail($id);
 
 		return view('bills.show', compact('bill'));
@@ -93,6 +111,12 @@ class BillsController extends Controller {
 	public function edit($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+		
 		$bill = Bill::findOrFail($id);
 
 		$drivers = array();

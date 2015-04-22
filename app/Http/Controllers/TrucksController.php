@@ -16,6 +16,11 @@ class TrucksController extends Controller {
 	public function index()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		$trucks = Truck::all();
 
@@ -41,6 +46,12 @@ class TrucksController extends Controller {
 	public function store(TrucksForm $truckForm)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$input = new Truck;
 
 		$input->model = \Request::input('model');
@@ -68,6 +79,12 @@ class TrucksController extends Controller {
 	public function show($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$truck = Truck::findOrFail($id);
 
 		return view('trucks.show', compact('truck'));
@@ -82,6 +99,12 @@ class TrucksController extends Controller {
 	public function edit($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+		
 		$truck = Truck::findOrFail($id);
 
 		return view('trucks.edit', compact('truck'));

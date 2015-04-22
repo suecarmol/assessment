@@ -17,6 +17,12 @@ class TiresController extends Controller {
 	public function index()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$tires = Tire::all();
 
 		return view('tires.index', compact('tires'));
@@ -30,6 +36,12 @@ class TiresController extends Controller {
 	public function create()
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		} 
+
 		$trucks = array();
 
 		$trucks_query = \DB::table('trucks')->get();
@@ -84,6 +96,12 @@ class TiresController extends Controller {
 	public function show($id)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
+
 		$tire = Tire::findOrFail($id);
 
 		return view('tires.show', compact('tire'));
@@ -98,6 +116,11 @@ class TiresController extends Controller {
 	public function edit($id, TiresForm $tiresForm)
 	{
 		//
+		//check if user is logged in
+		if(!\Auth::check())
+		{
+			return redirect('welcome');
+		}
 
 		$tire = Tire::findOrFail($id);
 
