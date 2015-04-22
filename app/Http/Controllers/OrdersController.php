@@ -22,7 +22,15 @@ class OrdersController extends Controller {
 			return redirect('welcome');
 		}
 
-		$orders = Order::all();
+		if(\Auth::user()->user_type == 'client')
+		{
+			$user_id = \Auth::user()->id;
+			$orders = Order::where('user_id', '=', $user_id)->get();
+		}
+		else
+		{
+			$orders = Order::all();
+		}
 
 		return view('orders.index', compact('orders'));
 

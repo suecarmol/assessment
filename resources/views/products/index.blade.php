@@ -3,8 +3,10 @@
   
   @if(\Auth::user()->user_type == 'admin')
 	 @include('includes.admin.sidebar')
-  @else
+  @elseif(\Auth::user()->user_type == 'billing')
     @include('includes.billing.sidebar') 
+  @else
+    @include('includes.clients.sidebar')  
   @endif  
 
 	@section('content')
@@ -29,7 +31,9 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Precio</th>
-                  <th colspan="2">Acciones</th>
+                  @if(\Auth::user()->user_type == 'admin')
+                    <th colspan="2">Acciones</th>
+                  @endif  
                 </tr>
               </thead>
               <tbody>
@@ -37,14 +41,16 @@
 								<tr>
 									<td> {{ $product->product_name }} </td>
 									<td> {{ $product->price }} </td>
-									<td> 
-                    {!! Html::link(route('products.edit', $product->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
-                  </td>
-									<td> 
-                    {!! Form::open(array('route' => array('products.destroy', $product->id), 'method' => 'DELETE')) !!}
-                      <button type="submit" class="btn btn-block btn-danger">Borrar</button>
-                    {!! Form::close() !!}
-                  </td>
+                  @if(\Auth::user()->user_type == 'admin')
+  									<td> 
+                      {!! Html::link(route('products.edit', $product->id), 'Actualizar', array('class' => 'btn btn-block btn-info')) !!}
+                    </td>
+  									<td> 
+                      {!! Form::open(array('route' => array('products.destroy', $product->id), 'method' => 'DELETE')) !!}
+                        <button type="submit" class="btn btn-block btn-danger">Borrar</button>
+                      {!! Form::close() !!}
+                    </td>
+                  @endif  
 								</tr>
 								@endforeach	
 							</tbody>
@@ -52,7 +58,9 @@
                 <tr>
                   <th>Nombre</th>
                   <th>Precio</th>
-                  <th colspan="2">Acciones</th>  
+                  @if(\Auth::user()->user_type == 'admin')
+                    <th colspan="2">Acciones</th>
+                  @endif 
                 </tr>
               </tfoot>
             </table>

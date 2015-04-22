@@ -1,8 +1,10 @@
 @extends('app')
 	@if(\Auth::user()->user_type == 'admin')
 	 @include('includes.admin.sidebar')
-  @else
+  @elseif(\Auth::user()->user_type == 'billing')
     @include('includes.billing.sidebar') 
+  @else
+  	@include('includes.clients.sidebar')  
   @endif 
 	@section('content')
     @include('products.partials.form')
