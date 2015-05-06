@@ -30,6 +30,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ action('BillsController@index') }}"><i class="fa fa-circle-o"></i> Mostrar Facturas</a></li>
                     <li><a href="{{ action('BillsController@create') }}"><i class="fa fa-circle-o"></i> Crear Factura</a></li>
+                    <li><a href="{{ action('BillsController@selectOrder') }}"><i class="fa fa-circle-o"></i> Generar Factura de Orden</a></li>
                 </ul>
             </li>
 

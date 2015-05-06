@@ -62,6 +62,8 @@ Route::post('drivers', 'DriversController@store');
 Route::resource('drivers', 'DriversController');
 
 //Bills Routes 
+Route::get('bills/selectOrder', 'BillsController@selectOrder');
+Route::get('bills/getOrder', 'BillsController@getOrder');
 Route::post('bills', 'BillsController@store');
 Route::resource('bills', 'BillsController');
 

@@ -14,6 +14,37 @@ class BillsController extends Controller {
 	 *
 	 * @return Response
 	 */
+
+	public function selectOrder()
+	{
+
+		$order_numbers = array();
+		$orders = \DB::table('orders')
+		->get();
+
+		foreach ($orders as $order) {
+			$order_numbers [] = array(
+				$order->id => $order->order_number
+			);
+		}
+
+		return view('bills.selectOrder', compact('order_numbers'));
+	}
+
+	public function getOrder()
+	{
+		
+		$order_number = \Input::all('order_id');
+
+		$order = \DB::table('orders')
+		->where('order_number', '=', $order_number)
+		->get();
+
+		return view('bills.getOrder')
+			->with('order', $order)
+			->with('order_number', $order_number);
+	}
+
 	public function index()
 	{
 		//
