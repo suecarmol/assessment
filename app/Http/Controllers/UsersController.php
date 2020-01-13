@@ -122,7 +122,7 @@ class UsersController extends Controller {
 		$unpaid_bills = \DB::table('bills')
 		->where('is_paid_for', '=', 1)
 		->count();
-	
+
 		if($bills_count > 0)
 		{
 			$paid_bills_percentage = round(($paid_bills * 100)/$bills_count, 2);
@@ -176,13 +176,13 @@ class UsersController extends Controller {
 		->get();
 
 		$top_5 = array();
-		
+
 		$total_revenue = \DB::table('orders')
 		->select(\DB::raw('sum(total_price) as total_revenue'))
 		->pluck('total_revenue');
 
 		if($total_revenue > 0)
-		{		
+		{
 			foreach ($top_5_customers as $customer) {
 				$top_5 [] = array(
 					'comapny_name' => $customer->comapny_name,
@@ -195,7 +195,7 @@ class UsersController extends Controller {
 					'comapny_name' => 0.0,
 					'percentage' => 0.0
 				);
-		}	
+		}
 
 		$best_client = \DB::table('orders')
 		->select(\DB::raw('comapny_name, sum(total_price) as revenue'))
@@ -378,7 +378,7 @@ class UsersController extends Controller {
 
 	public function redirect(){
 
-		//Since the AuthController redirects to /users, 
+		//Since the AuthController redirects to /users,
 		//the application will redirect to the actual
 		//view
 
@@ -388,7 +388,7 @@ class UsersController extends Controller {
 		}
 		elseif(\Auth::user()->user_type == 'billing'){
 			return redirect('/users/billing');
-		}	
+		}
 		elseif(\Auth::user()->user_type == 'client_service'){
 			return redirect('/users/client_service');
 		}
