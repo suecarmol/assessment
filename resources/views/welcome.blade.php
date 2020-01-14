@@ -104,7 +104,7 @@
                     <h2>Login</h2>
                     <p>Para utilizar la aplicaci&oacute;n, debes iniciar sesi&oacute;n.</p>
                   </span>
-                    <a href="{{ url('/auth/login')}}" class="btn btn-default btn-lg">Login</a>
+                    <a href="{{ url('/login')}}" class="btn btn-default btn-lg">Login</a>
                 </div>
             </div>
         </div>

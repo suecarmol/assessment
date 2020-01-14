@@ -30,7 +30,14 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url('auth/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                              <a href="{{ url('/logout') }}"
+                                  onclick="event.preventDefault();
+                                           document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">
+                                           Sign out
+                              </a>
+                              <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                  {{ csrf_field() }}
+                              </form>
                             </div>
                         </li>
                     </ul>

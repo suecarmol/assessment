@@ -11,6 +11,8 @@
 */
 Route::get('/', 'WelcomeController@index');
 
+Route::get('/login' , 'Auth\LoginController@login');
+
 //Route::get('products', 'ProductsController@index');
 //Route::get('products/create', 'ProductsController@create');
 
