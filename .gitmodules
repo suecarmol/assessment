@@ -1,0 +1,3 @@
+[submodule "laradock-assessment"]
+	path = laradock-assessment
+	url = https://github.com/Laradock/laradock.git
