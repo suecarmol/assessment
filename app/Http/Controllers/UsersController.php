@@ -345,7 +345,7 @@ class UsersController extends Controller {
 		->select(\DB::raw('count(order_number) as total_orders'))
 		->pluck('total_orders');
 
-		if($total_orders > 0)
+		if($total_orders->count() > 0)
 		{
 			foreach ($top_5_products as $product) {
 				$top_5 [] = array(
